@@ -135,20 +135,5 @@ router.put('/user/:id/password', async (req, res) => {
 
   res.json({ message: 'Contraseña actualizada con éxito' });
 });
-router.put('/update-user/:id', async (req, res) => {
-  const { id } = req.params;
-  let { username, firstName, lastName, phone, country, email, rol, password } = req.body;
-  if (password && password.trim() !== '') {
-    password = await bcrypt.hash(password, 10);
-  } else {
-    password = undefined;
-  }
-  const user = await User.findByIdAndUpdate(id, { username, firstName, lastName, phone, country, email, rol, password }, { new: true });
-  if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
-  res.json(user);
-});
-
-
-
 
 module.exports = router;
