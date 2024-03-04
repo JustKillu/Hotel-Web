@@ -35,21 +35,21 @@ const Navbar = () => {
   const handleMouseOut = () => {
     timeoutId = setTimeout(() => {
       setIsLoginOpen(false);
-    }, 500);
+    }, 200);
   };
   return (
-    <nav className="flex items-center justify-between p-6 bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+    <nav className="fixed top-0 w-full z-50 flex items-center justify-between p-6 bg-brown bg-opacity-80 text-white">
       <div className="flex items-center flex-shrink-0 mr-6">
-        <span className="font-semibold text-xl tracking-tight">Inventario de la Tienda</span>
+        <span className="font-semibold text-xl tracking-tight">Hotel Valera</span>
       </div>
       <div className="block lg:hidden">
         <button onClick={() => setIsNavOpen(!isNavOpen)} className="flex items-center px-3 py-2 border rounded text-white">
-          <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+          <svg className="fill-current h-3 w-3 " viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
         </button>
       </div>
-      <div className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${isNavOpen} ? '' : 'hidden'}`}>
+      <div className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto ${isNavOpen ? '' : 'hidden'}`}>
         <div className="text-sm lg:flex-grow">
-          <ScrollLink to="inicio" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
+          <ScrollLink to="#" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
             Inicio
           </ScrollLink>
           <ScrollLink to="nosotros" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
@@ -61,16 +61,19 @@ const Navbar = () => {
           <ScrollLink to="banquetes" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
             Banquetes
           </ScrollLink>
-          <ScrollLink to="restaurante" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
-            Restaurante
+          <ScrollLink to="areas" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
+            Areas
           </ScrollLink>
-          <ScrollLink to="reserva" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
+          <Link to="/reserva" smooth duration={500} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
             Reserva
-          </ScrollLink>
+          </Link>
           {user ? (
             <>
               <Link to="/perfil" className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
                 Perfil
+              </Link>
+              <Link to="/guide" className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
+                Guia
               </Link>
               <button onClick={handleLogout} className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
                 Cerrar sesión
@@ -85,10 +88,10 @@ const Navbar = () => {
               </div>
 
               {isLoginOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="origin-top-right  absolute right-0 mt-2 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                    <Link to="/login" className="block px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-700" role="menuitem">Iniciar sesión</Link>
-                    <Link to="/register" className="block px-4 py-2 text-sm text-white bg-blue-500 hover:bg-blue-700" role="menuitem">Registrarse</Link>
+                    <Link to="/login" className="block px-4 py-2 text-sm text-white bg-brown hover:bg-pastel" role="menuitem">Iniciar sesión</Link>
+                    <Link to="/register" className="block px-4 py-2 text-sm text-white bg-brown hover:bg-pastel" role="menuitem">Registrarse</Link>
                   </div>
                 </div>
               )}
