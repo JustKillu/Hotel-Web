@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import NavBarMain from '../components/NavBarMain.jsx';
 export default function Form() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -66,10 +66,9 @@ export default function Form() {
   };
 //Formualrio de registro
   return (
-    <div className="flex flex-col items-center justify-center">
-      {alert && <div className="fixed top-0 right-0 w-1/3 p-4 mb-4 text-center text-white bg-red-200 rounded shadow-lg">{alert}</div>}
-      {success && <div className="fixed top-0 right-0 w-1/3 p-4 mb-4 text-center text-white bg-green-200 rounded shadow-lg">{success}</div>}
-      <form onSubmit={handleSubmit} className="w-2/5 p-6 bg-white rounded shadow-md">
+    <div className="flex flex-col items-center justify-center mt-40 mb-20">
+            <NavBarMain /> 
+     <form onSubmit={handleSubmit} className="w-2/5 p-6 bg-white rounded shadow-md">
         <label className="block mb-2 text-black">Nombre de usuario</label>
         <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} required className="w-full p-2 mb-3 border rounded" />
         <label className="block mb-2 text-black">Contraseña</label>
@@ -86,7 +85,10 @@ export default function Form() {
         <input type="text" placeholder="Pais" value={country} onChange={(e) => setCountry(e.target.value)} required className="w-full p-2 mb-3 border rounded" />
         <label className="block mb-2 text-black">Correo electrónico</label>
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full p-2 mb-3 border rounded" />
-        <button type="submit" className="w-full p-2 text-white bg-blue-500 rounded hover:bg-blue-600">Register</button>
+        <button type="submit" className="w-full p-2 text-white bg-orange-500 rounded hover:bg-orange-800">Register</button>
+      {alert && <div className="bottom-0 mt-4 p-2 text-center text-black bg-red-200 rounded shadow-lg">{alert}</div>}
+      {success && <div className="bottom-0   mt-4 p-2 text-center text-black bg-green-200 rounded shadow-lg">{success}</div>}
+      
       </form>
     </div>
   );
