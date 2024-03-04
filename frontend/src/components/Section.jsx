@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+
 const Section = ({ id, color, title, text, sections, selectedSection, setSelectedSection }) => {
   return (
-    <div id={id} className='p-12 ' style={{ backgroundColor: color}}>
-      <h1 className='flex item-center justify-center 2xl mt-48'>{title}</h1>
-      {title === 'Nosotros' && <h1 className='flex items-center justify-center text-9xl text-pastel mb-11'>Bienvenido</h1>}
-    
+    <div id={id} className='p-12 md:flex md:flex-col md:items-center' style={{ backgroundColor: color}}>
+ 
+ {title === 'Nosotros' && <h1 className='text-5xl sm:text-7xl md:text-9xl text-center text-pastel pt-60 mb-11'>Bienvenido</h1>}
+   
       <p className='text-center max-w-xl mx-auto'>{text}</p>
       {sections && 
-        <div className='mt-4 flex justify-center items-center text-center'>
+        <div className='mt-4 flex justify-center items-center text-center flex-wrap'>
           {Object.keys(sections).map((key) => (
             <button 
               key={key} 
@@ -20,7 +21,7 @@ const Section = ({ id, color, title, text, sections, selectedSection, setSelecte
           
         </div>
       }
-      {selectedSection && <p className='text-center justify-center max-w-xl whitespace-nowrap mx-auto mb-48 mt-2' >{sections[selectedSection]}</p>}
+      {selectedSection && <p className='text-center justify-center max-w-xl whitespace-normal mx-auto mb-48 mt-2' >{sections[selectedSection]}</p>}
     </div>
   );
 };
