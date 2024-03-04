@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
-
+import NavBarMain from '../components/NavBarMain.jsx'; 
+import PromotionComp from '../components/PromotionComp.jsx';
+import { CopyToClipboard } from 'react-copy-to-clipboard'; 
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
   const [confirmDelete, setConfirmDelete] = useState({ show: false, userId: null });
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    let timer;
+    if (copied) {
+      timer = setTimeout(() => {
+        setCopied(false);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copied]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -103,77 +118,93 @@ const Admin = () => {
   useEffect(() => {
     loadUsers();
   }, []);
-    return (
-        <div className="relative">
-          {alert.show && (
-            <div className={`absolute top-0 right-0 m-4 p-2 rounded-md ${alert.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
-              {alert.message}
-            </div>
-          )}
-          {confirmDelete.show && (
-            <div className="absolute top-0 right-0 m-8 p-2 rounded-md bg-red-500 text-white">
-              ¿Estás seguro de que quieres borrar este usuario?
-              <button onClick={handleConfirmDelete} className="bg-white text-red-500 font-bold py-1 px-2 rounded ml-4">
-                Sí
-              </button>
-              <button onClick={() => setConfirmDelete({ show: false, userId: null })} className="bg-white text-red-500 font-bold py-1 px-2 rounded ml-4">
-                No
-              </button>
-            </div>
-          )}
-          <h1 className="text-2xl font-bold mb-4 ml-4 items-center justify-center text-white">Lista de Usuarios</h1>
-          
-          <div className=" flex-col items-center ml-4 mr-4 justify-center grid grid-cols-4 gap-4">
-    
-            {Array.isArray(users) && users.map((user, index) => (
-              <div key={index} className="bg-white p-4 rounded-md mb-4 w-full max-w-md shadow-lg">
-                <h2 className="text-xl font-bold text-black">Usuario: {user.username}</h2>
-                <p className="text-black">Contraseña: <span className='font-bold'>{"Encriptada"}</span></p>
-                <p className="text-black">Nombre: {user.firstName}</p>
-                <p className="text-black">Apellido: {user.lastName}</p>
-                <p className="text-black">Numero de telefono: {user.phone}</p>
-                <p className="text-black">Pais: {user.country}</p>
-                <p className="text-black">Email: {user.email}</p>
-                <p className="text-black">Rol: {user.rol}</p>
-                <button onClick={() => setEditingUser(user)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-                  Editar
+
+  return (
+    <div className='md:flex'>
+      <NavBarMain/>
+      <div className="relative mt-24">
+        <PromotionComp/>
+        {alert.show && (
+          <div className={`absolute top-0 right-0 m-4 p-2 rounded-md ${alert.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+            {alert.message}
+          </div>
+        )}
+        {confirmDelete.show && (
+          <div className="absolute top-0 right-0 m-8 p-2 rounded-md bg-red-500 text-white">
+            ¿Estás seguro de que quieres borrar este usuario?
+            <button onClick={handleConfirmDelete} className="bg-white text-red-500 font-bold py-1 px-2 rounded ml-4">
+              Sí
+            </button>
+            <button onClick={() => setConfirmDelete({ show: false, userId: null })} className="bg-white text-red-500 font-bold py-1 px-2 rounded ml-4">
+              No
+            </button>
+          </div>
+        )}
+        <h1 className="mt-4 text-2xl font-bold mb-4 ml-4 items-center justify-center text-white">Lista de Usuarios</h1>
+        
+        <div className=" flex-col items-center ml-4 mr-4 justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      
+          {Array.isArray(users) && users.map((user, index) => (
+            <div key={index} className="bg-white p-4 rounded-md mb-4 w-full max-w-md shadow-lg">
+            <h2 className="text-xl font-bold text-black pr-8">Usuario: {user.username}
+              <CopyToClipboard text={user._id}  onCopy={() => setCopied(true)} className='ml-4 text-lg bg-blue-500 rounded-xl text-white p-2'>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Copiar ID
                 </button>
-                <button onClick={() => { handleDelete(user._id) }} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4">
-                  Borrar
+              </CopyToClipboard>
+              
+            </h2>
+            {copied ? <span style={{color: 'green'}}>ID copiado.</span> : null}
+            <p className="text-black">Contraseña: <span className='font-bold'>{"Encriptada"}</span></p>
+            <p className="text-black">Nombre: {user.firstName}</p>
+            <p className="text-black">Apellido: {user.lastName}</p>
+            <p className="text-black">Numero de telefono: {user.phone}</p>
+            <p className="text-black">Pais: {user.country}</p>
+            <p className="text-black">Email: {user.email}</p>
+            <p className="text-black">Rol: {user.rol}</p>
+            <button onClick={() => setEditingUser(user)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+              Editar
+            </button>
+            <button onClick={() => { handleDelete(user._id) }} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4">
+              Borrar
+            </button>
+          </div>
+          ))}
+          {editingUser && (
+            <div className="fixed inset-0 w-full h-full flex items-center justify-center z-10 bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded-md mb-4 w-full max-w-md shadow-lg">
+                <h2 className="text-xl font-bold text-black">Editar Usuario</h2>
+                <label className="block text-black">Nombre de usuario</label>
+                <input type="text" value={editingUser.username} onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <label className="block text-black">Nueva contraseña</label>
+                <input type="password" onChange={(e) => setNewPassword(e.target.value)} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <label className="block text-black">Nombre</label>
+                <input type="text" value={editingUser.firstName} onChange={(e) => setEditingUser({ ...editingUser, firstName: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <label className="block text-black">Apellido</label>
+                <input type="text" value={editingUser.lastName} onChange={(e) => setEditingUser({ ...editingUser, lastName: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <label className="block text-black">Numero de Telefono</label>
+                <input type="text" value={editingUser.phone} onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <label className="block text-black">Pais</label>
+                <input type="text" value={editingUser.country} onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+               
+                <label className="block text-black">Email</label>
+                <input type="text" value={editingUser.email} onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <label className="block text-black">Rol</label>
+                <input type="text" value={editingUser.rol} onChange={(e) => setEditingUser({ ...editingUser, rol: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
+                <button onClick={() => handleUpdate(editingUser._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                  Guardar
+                </button>
+                <button onClick={() => setEditingUser(null)} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4">
+                  Cancelar
                 </button>
               </div>
-            ))}
-            {editingUser && (
-              <div className="fixed inset-0 w-full h-full flex items-center justify-center z-10 bg-black bg-opacity-50">
-                <div className="bg-white p-4 rounded-md mb-4 w-full max-w-md shadow-lg">
-                  <h2 className="text-xl font-bold text-black">Editar Usuario</h2>
-                  <label className="block text-black">Nombre de usuario</label>
-                  <input type="text" value={editingUser.username} onChange={(e) => setEditingUser({ ...editingUser, username: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <label className="block text-black">Nueva contraseña</label>
-                  <input type="password" onChange={(e) => setNewPassword(e.target.value)} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <label className="block text-black">Nombre</label>
-                  <input type="text" value={editingUser.firstName} onChange={(e) => setEditingUser({ ...editingUser, firstName: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <label className="block text-black">Apellido</label>
-                  <input type="text" value={editingUser.lastName} onChange={(e) => setEditingUser({ ...editingUser, lastName: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <label className="block text-black">Numero de Telefono</label>
-                  <input type="text" value={editingUser.phone} onChange={(e) => setEditingUser({ ...editingUser, phone: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <label className="block text-black">Pais</label>
-                  <input type="text" value={editingUser.country} onChange={(e) => setEditingUser({ ...editingUser, country: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                 
-                  <label className="block text-black">Email</label>
-                  <input type="text" value={editingUser.email} onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <label className="block text-black">Rol</label>
-                  <input type="text" value={editingUser.rol} onChange={(e) => setEditingUser({ ...editingUser, rol: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                  <button onClick={() => handleUpdate(editingUser._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-                    Guardar
-                  </button>
-                  <button onClick={() => setEditingUser(null)} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4">
-                    Cancelar
-                  </button>
-                </div>
-              </div>
-            )}
-        </div>
+            </div>
+          )}
+      </div>
+    </div>
+
+  
+        
       </div>
     );}
 export default Admin;
