@@ -7,6 +7,7 @@ export default {
   ],
   theme: {
     extend: {
+      
       colors: {
         pastel: '#f3dabc',
         brown:'#6D4C3C'
