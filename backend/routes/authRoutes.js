@@ -35,27 +35,6 @@ router.post('/register',
     res.status(201).json({ success: 'Registro exitoso!' });
   }
 );
-router.post('/user/favorites', async (req, res) => {
-  try {
-    const user = await User.findById(req.body.userId);
-    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-
-    const productIndex = user.favorites.indexOf(req.body.productId);
-    if (productIndex > -1) {
-      // Si el producto ya es un favorito, lo elimina de los favoritos
-      user.favorites.splice(productIndex, 1);
-    } else {
-      // Si el producto no es un favorito, lo agrega a los favoritos
-      user.favorites.push(req.body.productId);
-    }
-
-    await user.save();
-    res.json(user.favorites);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Error del servidor', error: error });
-  }
-});
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -68,17 +47,15 @@ router.post('/login', async (req, res) => {
   res.json({ token });
 });
 
-router.get('/user/:id/favorites', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-
-    res.json(user); 
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Error del servidor', error: error });
+router.get('/user/:id', async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).json({ error: 'Usuario no encontrado' });
   }
+  res.json(user);
 });
+
 
 router.get('/user', async (req, res) => {
   const authHeader = req.headers['authorization'];
