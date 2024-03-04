@@ -12,7 +12,7 @@ const promoSchema = new mongoose.Schema({
   time: String
 });
 
-// Crear el modelo del producto
+// Crear el modelo del promocion
 const Promotion = mongoose.model('Promocion', promoSchema, 'Promotions');
 
 // Crear una instancia de express
@@ -32,7 +32,7 @@ router.get('/promotions', async (req, res) => {
   }
 });
 
-// Ruta de la API para leer un producto
+// Ruta de la API para leer un promocion
 router.get('/promotions/:id', async (req, res) => {
   try {
     const promotion = await Promotion.findById(req.params.id);
@@ -49,7 +49,7 @@ router.get('/promotions/:id', async (req, res) => {
 
 
 
-// Ruta de la API para crear un producto
+// Ruta de la API para crear un promocion
 router.post('/promotions', async (req, res) => {
   try {
     const newPromotions = new Promotion(req.body);
@@ -61,7 +61,7 @@ router.post('/promotions', async (req, res) => {
   }
 });
 
-// Ruta de la API para actualizar un producto
+// Ruta de la API para actualizar un promocion
 router.put('/promotions/:id', async (req, res) => {
   try {
     const updatedPromotions = await Promotion.findByIdAndUpdate(req.params.id, req.body, { new: true });
