@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const productRoutes = require('./routes/productRoutes');
+const promotionRoutes = require('./routes/promotionRoutes');
 const authRoutes = require('./routes/authRoutes');
-
+const roomRoutes = require('./routes/roomRoutes');
+const reservRoutes = require('./routes/reservationRoutes');
+const blogRoutes = require('./routes/blogRoutes');
 // Inicializar la aplicación Express
 const app = express();
 
@@ -14,12 +16,14 @@ app.use(cors());
 app.use(express.json());
 
 // Conectar a MongoDB
-mongoose.connect('mongodb://localhost:27017/Inventario');
+mongoose.connect('mongodb://localhost:27017/Hotel');
 
 // Rutas
-app.use(productRoutes);
+app.use(promotionRoutes);
 app.use(authRoutes);
-
+app.use(roomRoutes);
+app.use(reservRoutes);
+app.use(blogRoutes);
 
 
 app.listen(3001, () => console.log('Server is running on http://localhost:3001'));
