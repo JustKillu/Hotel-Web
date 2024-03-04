@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import HeroImage from '../components/HeroImage.jsx';
 import WeatherComponent from '../components/Weather.jsx';
 import Section from '../components/Section.jsx';
 import RoomSection from '../components/RoomSection.jsx'; 
+import FoodSection from '../components/FoodSection.jsx'; 
+import PromotionSection from '../components/PromotionSection.jsx'; 
+import NavBar from '../components/NavBar.jsx'; 
 
-const heroImage = 'https://imgscf.slidemembers.com/docs/1/1/297/hotel_service_powerpoint_presentation_slides_296597.jpg';
+const heroImage = 'https://i.imgur.com/6Yk4Ms3.jpeg';
 
 const HomePage = () => {
   const [selectedSection, setSelectedSection] = useState('Misión');
-
   const misiones = {
     "Misión": 'Nuestra misión es proporcionar el mejor servicio...',
     "Promesa de Servicio": 'Nuestra promesa es mantener siempre la calidad...',
     "Visión":'Buscamos ser reconocidos como el mejor hotel de lujo, elegancia y confort en Venezuela.',
     "Valores":'Servicio • Trabajo en equipo • Excelencia'
   };
-
-
-  
   const roomImages = [
     { src: 'https://colineal.com/cdn/shop/articles/estilos-decoracion-habitaciones-principales.jpg', alt: 'Habitación 1', name: 'Deluxe',text:"La habitación Deluxe es un espacio de lujo diseñado para proporcionar la máxima comodidad y relajación. Cuenta con una cama king size con ropa de cama de alta calidad, un amplio baño con ducha de efecto lluvia y artículos de aseo de cortesía. La habitación también incluye un área de estar con sofá y televisión de pantalla plana, así como un minibar bien surtido. Las ventanas de piso a techo ofrecen vistas impresionantes de la ciudad." },
     { src: 'https://enzomuebles.com/wp-content/uploads/2023/09/peque-1-1024x897.jpg', alt: 'Habitación 2', name: 'Superior',text:"La habitación Superior ofrece un ambiente elegante y acogedor. Cuenta con una cama queen size con ropa de cama suave y cómoda, un baño moderno con todas las comodidades necesarias, y un área de trabajo con escritorio y silla ergonómica. También incluye una televisión de pantalla plana con canales por cable y un minibar. Las ventanas ofrecen vistas panorámicas de los alrededores del hotel." },
@@ -35,19 +34,18 @@ const HomePage = () => {
     { src: 'https://www.laazotearooftop.com/sites/default/files/gallery/img3.jpg', alt: 'Comida 3', name: 'Azotea' },
 
   ];
-  const reserva = [
-    { src: 'https://pbs.twimg.com/media/C5mUnjGWQAAHyAj.jpg', alt: 'Comida 1', name: 'Valera' },
-  ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '2px' }}>
-      <HeroImage image={heroImage} />
+    <div className="flex flex-col mb-2 ">
+      <NavBar/>
+      <HeroImage image={heroImage}/>
       <Section id="nosotros" color="#38241c" title="Nosotros" text="Bienvenidos a nuestro hotel en Valera, Trujillo. Ofrecemos una experiencia inolvidable con nuestro servicio de primera clase y nuestras instalaciones de lujo." sections={misiones} selectedSection={selectedSection} setSelectedSection={setSelectedSection} />
       <RoomSection id="habitaciones" color="#A52A2A" title="Habitaciones"text={roomImages.text} images={roomImages} />
-      <RoomSection id="banquetes" color="#DEB887" title="Banquetes"text={food.text} images={food} />
-      <RoomSection id="restaurante" color="#D2691E" title="Restaurante"text={restaurante.text} images={restaurante} />
-      <RoomSection id="reserva" color="#CD853F" title="Reserva"text={reserva.text} images={reserva} />
-      <div id="clima"style={{ padding: '12px', textAlign: 'center',  }}>
+      <FoodSection id="banquetes" title="Nuestros Mejores Platos" food={food} />
+      <RoomSection id="areas" color="#D2691E" title="Areas"text={restaurante.text} images={restaurante} />
+      <PromotionSection/>
+
+      <div id="clima" className="p-12 text-center">
         <WeatherComponent /> 
       </div>
     </div>
