@@ -144,3 +144,9 @@ Estas rutas adicionales permiten a los usuarios iniciar sesión, interactuar con
 1. `GET /rooms`: Esta ruta permite obtener todas las habitaciones. Si ocurre algún error durante la obtención de las habitaciones, se devuelve un mensaje de error.
 
 2. `POST /rooms`: Esta ruta permite crear una nueva habitación. La habitación se crea con los datos proporcionados en el cuerpo de la solicitud (nombre, descripción, precio, tiempo, imagen). Si la habitación se guarda correctamente, se devuelve la habitación guardada. Si ocurre algún error durante la creación de la habitación, se devuelve un mensaje de error.
+
+## Ruta de habitaciones (roomRoutes)
+
+1. `GET /rooms`: Esta ruta permite obtener todas las habitaciones. Si ocurre algún error durante la obtención de las habitaciones, se devuelve un mensaje de error.
+
+2. `POST /rooms`: Esta ruta permite crear una nueva habitación. La habitación se crea con los datos proporcionados en el cuerpo de la solicitud (nombre, descripción, precio, tiempo, imagen). Si la habitación se guarda correctamente, se devuelve la habitación guardada. Si ocurre algún error durante la creación de la habitación, se devuelve un mensaje de error.
