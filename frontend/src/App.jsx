@@ -5,15 +5,6 @@ import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import Navbar from './components/NavBar.jsx';
 import Admin from './pages/Admin.jsx';
-<<<<<<< Updated upstream
-=======
-import Reserva from './pages/Reserva.jsx';
-import Perfil from './pages/Perfil.jsx';
-import BlogAndGuidePage from './pages/BlogAndGuidePage.jsx';
-import Rooms from './pages/Rooms.jsx';
-
-
->>>>>>> Stashed changes
 
 
 function App() {
@@ -25,13 +16,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} /> 
         <Route path="/admin" element={<Admin />} /> 
-<<<<<<< Updated upstream
-=======
-        <Route path="/reserva" element={<Reserva />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/guide" element={<BlogAndGuidePage />} />
-        <Route path="/rooms" element={<Rooms />} />
->>>>>>> Stashed changes
       </Routes>
     </Router>
   );
