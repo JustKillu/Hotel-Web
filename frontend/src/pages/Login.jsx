@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import NavBarMain from '../components/NavBarMain.jsx';
 const Login = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -30,8 +30,6 @@ const Login = () => {
         const data = await response.json();
         localStorage.setItem('token', data.token); // Guarda el token en el localStorage
         setMessage({ text: 'Inicio de sesión exitoso', type: 'success' });
-
-        // obtener los detalles del usuario
         const userResponse = await fetch('http://localhost:3001/user', {
           headers: {
             'Authorization': `Bearer ${data.token}` 
@@ -61,20 +59,15 @@ const Login = () => {
       return () => clearTimeout(timer);
     }
   }, [message]);
-// Formulario de login
   return (
-      <div className="flex items-start justify-center sm:px-6 lg:px-8 pt-20">
+    <div className="flex items-start justify-center sm:px-6 lg:px-8 pt-20 mt-44">
+            <NavBarMain /> 
         <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-lg shadow-md">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Iniciar Sesión
             </h2>
           </div>
-          {message && (
-            <div className={`fixed top-0 right-0 m-6 p-4 text-black rounded shadow-lg ${message.type === 'success' ? 'bg-green-200' : 'bg-red-200'}`}>
-              {message.text}
-            </div>
-          )}
           <form className="mt-8 space-y-6" onSubmit={e => onSubmit(e)}>
             <input type="hidden" name="remember" value="true" />
             <div className="rounded-md shadow-sm -space-y-px">
@@ -89,11 +82,16 @@ const Login = () => {
             </div>
     
             <div>
-              <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button type="submit" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-500 hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
                 Iniciar Sesión
               </button>
             </div>
           </form>
+          {message && (
+            <div className={`bottom-0 right-0 m-6 p-4 text-black rounded shadow-lg ${message.type === 'success' ? 'bg-green-200' : 'bg-red-200'}`}>
+              {message.text}
+            </div>
+          )}
         </div>
       </div>
     );

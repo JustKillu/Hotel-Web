@@ -7,7 +7,7 @@ const RoomSection = ({ id, color, title, images }) => {
 
     return (
         <div className={bgColor}>
-            <div id={id} className='p-12 text-center h-[700px] mb-14'> 
+            <div id={id} className='p-12 text-center h-auto mb-12'> 
                 <h2 className="text-2xl mb-4 text-left">{title}</h2>
                 <div className="relative">
                     <Carousel showThumbs={false} showStatus={false} className="z-10 carousel-control-small">
@@ -17,7 +17,8 @@ const RoomSection = ({ id, color, title, images }) => {
                                     <h1 className="text-4xl mr-4">{image.name}</h1>
                                     <p className="text-lg">{image.text}</p>
                                 </div>
-                                <img src={image.src} alt={image.alt} className="max-h-[500px] w-full object-cover" />
+                                <img src={image.src} alt={image.alt} className="max-h-96 w-full object-cover" />
+
                             </div>
                         ))}
                     </Carousel>

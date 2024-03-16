@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Room = require('../models/Room'); 
-const multer = require('multer'); 
-const fs = require('fs'); 
-const upload = multer({ dest: 'uploads/' });
+
 
 router.get('/rooms', (req, res) => {
   Room.find({})
@@ -15,23 +13,17 @@ router.get('/rooms', (req, res) => {
     });
 });
 
-router.post('/rooms', upload.single('img'), (req, res) => {
-  if (!req.body.name || !req.body.description || !req.body.comodidades || !req.body.tarifas || !req.body.reviews || !req.body.evaluacion || !req.file) {
+router.post('/rooms', (req, res) => {
+  if (!req.body.name || !req.body.description || !req.body.price || !req.body.time) {
     return res.status(400).send('Faltan campos necesarios');
   }
-  
 
   const newRoom = new Room({
     name: req.body.name,
     description: req.body.description,
-    comodidades: req.body.comodidades,
-    tarifas: req.body.tarifas,
-    reviews: req.body.reviews,
-    evaluacion: req.body.evaluacion,
-    img: {
-      data: fs.readFileSync(req.file.path),
-      contentType: 'image/png'
-    }
+    price: req.body.price,
+    time: req.body.time,
+    img: req.body.time
   });
 
   newRoom.save()
@@ -43,31 +35,6 @@ router.post('/rooms', upload.single('img'), (req, res) => {
     });
 });
 
-
-router.post('/rooms/:roomId/reviews', (req, res) => {
-  const roomId = req.params.roomId;
-  const review = req.body.text;
-if (!review) {
-  return res.status(400).send('Falta el texto de la reseña');
-}
-
-  Room.findById(roomId)
-    .then(room => {
-      if (!room) {
-        return res.status(404).send('Habitación no encontrada');
-      }
-
-      room.reviews.push(review);
-
-      room.save()
-        .then(updatedRoom => {
-          res.status(201).json(updatedRoom);
-        });
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
-});
 
 
 

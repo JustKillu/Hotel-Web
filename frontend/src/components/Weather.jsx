@@ -10,8 +10,7 @@ const Weather = () => {
                 const response = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=Valera,ve&appid=b2b93786fd0442e155139dfb2e5f475c&units=metric`);
                 setWeatherData(response.data);
             } catch (error) {
-                console.error("Error fetching weather data: ", error);
-                // Imprime el mensaje de error completo
+                console.error("Error mostrando el clima: ", error);
                 console.error(error.message);
             }
         };
