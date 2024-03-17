@@ -60,10 +60,6 @@ const CreateRoom = () => {
                 <input type="text" name="tarifas" onChange={handleInputChange} />
             </label>
             <label>
-                Reviews:
-                <input type="text" name="reviews" onChange={handleInputChange} />
-            </label>
-            <label>
                 Evaluacion:
                 <input type="text" name="evaluacion" onChange={handleInputChange} />
             </label>

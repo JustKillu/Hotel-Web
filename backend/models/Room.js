@@ -1,13 +1,19 @@
 const mongoose = require('mongoose');
 
+const reviewSchema = new mongoose.Schema({
+  text: String,
+  user: String,
+  date: Date
+});
 
 const roomSchema = new mongoose.Schema({
   name: String,
   description: String,
-  price: String,
-  time: String,
-  img: String
+  comodidades: String,
+  tarifas: String,
+  reviews: [reviewSchema],
+  evaluacion: String,
+  img: { data: Buffer, contentType: String }
 });
-
 
 module.exports = mongoose.model('Room', roomSchema);

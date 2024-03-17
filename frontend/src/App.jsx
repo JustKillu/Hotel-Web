@@ -7,7 +7,7 @@ import Admin from './pages/Admin.jsx';
 import Reserva from './pages/Reserva.jsx';
 import Perfil from './pages/Perfil.jsx';
 import BlogAndGuidePage from './pages/BlogAndGuidePage.jsx';
-
+import Rooms from './pages/Rooms.jsx';
 
 
 
@@ -23,6 +23,7 @@ function App() {
         <Route path="/reserva" element={<Reserva />} />
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/guide" element={<BlogAndGuidePage />} />
+        <Route path="/rooms" element={<Rooms />} />
       </Routes>
     </Router>
   );

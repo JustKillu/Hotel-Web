@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import NavBarMain from '../components/NavBarMain.jsx'; 
 import PromotionComp from '../components/PromotionComp.jsx';
 import { CopyToClipboard } from 'react-copy-to-clipboard'; 
+import CreateRoom from '../components/CreateRoom.jsx';
 const Admin = () => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
@@ -124,6 +125,7 @@ const Admin = () => {
       <NavBarMain/>
       <div className="relative mt-24">
         <PromotionComp/>
+        <CreateRoom/>
         {alert.show && (
           <div className={`absolute top-0 right-0 m-4 p-2 rounded-md ${alert.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
             {alert.message}
