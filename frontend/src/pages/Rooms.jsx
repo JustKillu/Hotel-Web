@@ -70,8 +70,8 @@ const HotelRooms = () => {
 
     return (
         <div className="bg-white min-h-screen text-black pt-12">
-            <NavBarMain className="mb-12" />
-            <div className="container mx-auto px-4">
+            <NavBarMain/>
+            <div className="container mx-auto px-4 ">
                 <div className="grid grid-cols-3 gap-4">
                     {rooms.map(room => {
                         let imgSrc = '';
@@ -81,7 +81,7 @@ const HotelRooms = () => {
                         return (
                             <motion.div 
                                 key={room._id} 
-                                className="mb-8 bg-white shadow rounded p-6 border-2 border-transparent cursor-pointer transform transition-all duration-200 hover:border-blue-500 hover:scale-105" 
+                                className="mb-8 bg-white mt-10 shadow rounded p-6 border-2 border-transparent cursor-pointer transform transition-all duration-200 hover:border-blue-500 hover:scale-105" 
                                 onClick={() => handleRoomSelect(room)}
                                 whileHover={{ scale: 1.05 }}
                             >
