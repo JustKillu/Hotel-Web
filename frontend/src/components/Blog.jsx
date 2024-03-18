@@ -6,12 +6,15 @@ const BlogPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [newPost, setNewPost] = useState({ title: '', excerpt: '', image: '', link: '' });
+  const [rol, setRol] = useState('');
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    setIsLoggedIn(user ? true : false);
+    const rol = localStorage.getItem('rol');
+    setIsLoggedIn(rol ? true : false);
+    setRol(rol || '');
+    console.log("Rol del usuario:", rol || 'No hay usuario');
   }, []);
-
+  
   useEffect(() => {
     axios.get('http://localhost:3001/blog')
       .then(response => setPosts(response.data))
@@ -29,11 +32,19 @@ const BlogPage = () => {
       .catch(error => console.error('Error:', error));
   };
 
+  const handleDelete = (postId) => {
+    axios.delete(`http://localhost:3001/blog/${postId}`)
+      .then(() => {
+        setPosts(posts.filter(post => post._id !== postId));
+      })
+      .catch(error => console.error('Error:', error));
+  };
+
   return (
     <div className="flex flex-col justify-between h-screen p-4">
       <div>
         
-        <h1 className="text-2xl font-bold mb-4">Blog de Turismo</h1>
+        <h1 className="text-2xl font-bold mb-4 text-light-text dark:text-dark-text ">Blog de Turismo</h1>
         {showForm && (
           <form onSubmit={handleSubmit} className="mb-4 space-y-4 p-4 rounded-xl w-96 bg-white  h-80 fixed ">
             <input type="text" value={newPost.title} onChange={e => setNewPost({ ...newPost, title: e.target.value })} placeholder="Título" required className="w-full p-2 border rounded" />
@@ -41,8 +52,8 @@ const BlogPage = () => {
             <input type="text" value={newPost.image} onChange={e => setNewPost({ ...newPost, image: e.target.value })} placeholder="URL de la imagen" required className="w-full p-2 border rounded" />
             <input type="text" value={newPost.link} onChange={e => setNewPost({ ...newPost, link: e.target.value })} placeholder="URL del post" required className="w-full p-2 border rounded" />
             <div className="flex justify-end space-x-2">
-              <button type="submit" className="p-2 bg-blue-500 text-white rounded">Crear</button>
-              <button type="button" onClick={() => setShowForm(false)} className="p-2 bg-red-500 text-white rounded">Cerrar</button>
+              <button type="submit" className="p-2 bg-blue-500 text-light-text dark:text-dark-text  rounded">Crear</button>
+              <button type="button" onClick={() => setShowForm(false)} className="p-2 bg-red-500 text-light-text dark:text-dark-text  rounded">Cerrar</button>
             </div>
           </form>
         )}
@@ -53,11 +64,12 @@ const BlogPage = () => {
               <img src={post.image} alt={post.title} className="w-full h-64 object-cover" />
               <h2 className="text-xl font-bold mt-2">{post.title}</h2>
               <p className="text-gray-700">{post.excerpt}</p>
+              {rol === 'adm' && <button onClick={() => handleDelete(post._id)} className="p-2 bg-red-500 text-light-text dark:text-dark-text  rounded">Eliminar</button>}
             </div>
           ))}
         </div>
       </div>
-      {isLoggedIn && <button onClick={() => setShowForm(true)} className="p-2 bg-blue-500 text-white rounded self-start">Nueva Publicación</button>}
+      {isLoggedIn && <button onClick={() => setShowForm(true)} className="p-2 bg-blue-500 text-light-text dark:text-dark-text  rounded self-start">Nueva Publicación</button>}
     </div>
   );
 };
