@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); 
+const fs = require('fs'); 
 // Esquema del promociones
 const promoSchema = new mongoose.Schema({
   name: String,
   description: String,
-  price: Number,
-  quantity: Number,
-  image: String,
-  time: String
+  comodidades: String,
+  tarifas: String,
+  evaluacion: String,
+  img: { data: Buffer, contentType: String }
 });
 
 // Crear el modelo del promocion
@@ -49,10 +51,13 @@ router.get('/promotions/:id', async (req, res) => {
 
 
 
+
 // Ruta de la API para crear un promocion
-router.post('/promotions', async (req, res) => {
+router.post('/promotions', upload.single('img'), async (req, res) => {
   try {
     const newPromotions = new Promotion(req.body);
+    newPromotions.img.data = fs.readFileSync(req.file.path);
+    newPromotions.img.contentType = 'image/png'; // o 'image/jpeg', dependiendo del formato de la imagen
     const savedPromotions = await newPromotions.save();
     res.json(savedPromotions);
   } catch (error) {
@@ -61,20 +66,31 @@ router.post('/promotions', async (req, res) => {
   }
 });
 
+
 // Ruta de la API para actualizar un promocion
 router.put('/promotions/:id', async (req, res) => {
   try {
-    const updatedPromotions = await Promotion.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (updatedPromotions) {
-      res.json(updatedPromotions);
-    } else {
-      res.status(404).json({ message: 'Promocion no encontrado' });
+    const promotion = await Promotion.findById(req.params.id);
+    if (!promotion) {
+      return res.status(404).json({ message: 'Promocion no encontrado' });
     }
+    // Actualizar cada campo con los datos del cuerpo de la solicitud
+    promotion.name = req.body.name;
+    promotion.description = req.body.description;
+    promotion.comodidades = req.body.comodidades;
+    promotion.tarifas = req.body.tarifas;
+    promotion.evaluacion = req.body.evaluacion;
+
+    const updatedPromotion = await promotion.save();
+    res.json(updatedPromotion);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Server error', error: error });
   }
 });
+
+
+
 router.delete('/promotions/:id', async (req, res) => {
   try {
     const promotion = await Promotion.findById(req.params.id);
