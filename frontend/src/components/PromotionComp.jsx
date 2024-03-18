@@ -37,14 +37,14 @@ const PromotionComponent = () => {
   }, [showAlert]);
 
   return (
-    <div className="fixed bottom-0 right-0 p-4 mr-6 mb-4 bg-pastel rounded-xl">
+    <div className="fixed bottom-0 right-0 p-4 mr-6 mb-4 rounded-xl">
       {showAlert && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
           <strong className="font-bold">¡Éxito!</strong>
           <span className="block sm:inline"> Promoción enviada exitosamente.</span>
         </div>
       )}
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => setIsOpen(true)}>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => setIsOpen(true)}>
         Mandar Publicidad
       </button>
       {isOpen && (
@@ -75,10 +75,10 @@ const PromotionComponent = () => {
             />
           </div>
           <div className="flex items-center justify-between gap-3">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <button className="bg-blue-500 hover:bg-blue-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
               Enviar Promoción
             </button>
-            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => setIsOpen(false)}>
+            <button className="bg-red-500 hover:bg-red-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={() => setIsOpen(false)}>
               Cerrar Formulario
             </button>
           </div>
