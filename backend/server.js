@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // Conectar a MongoDB
-mongoose.connect('mongodb://localhost:27017/Hotel');
+mongoose.connect(process.env.MONGODBURL);
 
 // Rutas
 app.use(promotionRoutes);
