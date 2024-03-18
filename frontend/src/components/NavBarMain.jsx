@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import DarkMode from '../components/DarkMode.jsx';
 
 const NavbarMain = () => {
   const [user, setUser] = useState(localStorage.getItem('user'));
@@ -39,7 +40,7 @@ const NavbarMain = () => {
   };
   return (
     <nav className="absolute top-0 w-full z-50 flex items-center justify-between p-6 bg-brown bg-opacity-80 text-white">
-
+  <DarkMode/>
       <div className="flex items-center flex-shrink-0 mr-6">
         <span className="font-semibold text-xl tracking-tight">Hotel Valera</span>
       </div>
@@ -63,6 +64,12 @@ const NavbarMain = () => {
               </button>
               <Link to="/guide" className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
                 Guia
+              </Link>
+              <Link to="/rooms" className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
+                Habitaciones
+              </Link>
+              <Link to="/reserva" className="block mt-4 lg:inline-block lg:mt-0 mr-4 hover:underline">
+                Reservar
               </Link>
             </>
             
