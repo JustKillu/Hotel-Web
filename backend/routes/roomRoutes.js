@@ -33,7 +33,7 @@ router.get('/rooms/:roomId/reviews', (req, res) => {
 
 router.post('/rooms', upload.single('img'), (req, res) => {
   if (!req.body.name || !req.body.description || !req.body.comodidades || !req.body.tarifas || !req.body.evaluacion || !req.file) {
-    console.log('Falta info'); 
+
   }
   const newRoom = new Room({
     name: req.body.name,
@@ -44,7 +44,8 @@ router.post('/rooms', upload.single('img'), (req, res) => {
     img: {
       data: fs.readFileSync(req.file.path),
       contentType: 'image/png'
-    }
+    },
+    espacio: req.body.espacio
   });
 
   newRoom.save()
@@ -59,7 +60,7 @@ router.post('/rooms', upload.single('img'), (req, res) => {
 router.post('/rooms/:roomId/reviews', (req, res) => {
   const roomId = req.params.roomId;
   const review = req.body.text;
-  const user = req.body.user; // Asegúrate de enviar el usuario desde el frontend
+  const user = req.body.user; 
   if (!review || !user) {
     return res.status(400).send('Falta el texto de la reseña o el usuario');
   }
@@ -69,8 +70,6 @@ router.post('/rooms/:roomId/reviews', (req, res) => {
       if (!room) {
         return res.status(404).send('Habitación no encontrada');
       }
-
-      // Creamos un objeto para la reseña con el texto, el usuario y la fecha actual
       const reviewObject = {
         text: review,
         user: user,
