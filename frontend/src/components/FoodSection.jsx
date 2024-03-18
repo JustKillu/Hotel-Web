@@ -8,8 +8,8 @@ const FoodSection = ({ id, title, food }) => {
           {food.map((item, index) => (
             <div key={index} className="relative border-2 border-gray-200 rounded-lg overflow-hidden">
               <img src={item.src} alt={item.alt} className="w-full h-80 object-cover" />
-              <div className="absolute bottom-0 bg-black bg-opacity-50 w-full text-white text-center">{item.name}</div>
-              <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-75 transition-all duration-200 flex items-end justify-start text-white opacity-0 hover:opacity-100">
+              <div className="absolute bottom-0 bg-black bg-opacity-50 w-full text-light-text dark:text-dark-text  text-center">{item.name}</div>
+              <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-75 transition-all duration-200 flex items-end justify-start text-light-text dark:text-dark-text  opacity-0 hover:opacity-100">
                 <p className="p-4 bg-white bg-opacity-50 rounded text-left">{item.text}</p>
               </div>
             </div>
