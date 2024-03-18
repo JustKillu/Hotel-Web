@@ -15,9 +15,10 @@ const RoomDetails = ({ room, reviews, onReviewChange, onReviewSubmit }) => {
             <p className="mb-2">{room.tarifas}</p>
             <p className="mb-2">{room.reviews}</p>
             <p className="mb-2">{room.evaluacion}</p>
+            <p className="mb-2">{room.espacio}</p>
             <img src={imgSrc} alt="" className="w-64 h-64 object-cover mb-4" loading="lazy" />
             <textarea value={reviews[room._id] || ''} onChange={(event) => onReviewChange(room._id, event)} className="w-full p-2 border rounded mb-2" placeholder="Leave a review" />
-            <button onClick={() => onReviewSubmit(room._id)} className="w-full py-2 bg-blue-500 text-white rounded">Submit Review</button>
+            <button onClick={() => onReviewSubmit(room._id)} className="w-full py-2 bg-blue-500 text-light-text dark:text-dark-text  rounded">Submit Review</button>
         </div>
     );
 };
