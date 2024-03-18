@@ -13,7 +13,8 @@ const roomSchema = new mongoose.Schema({
   tarifas: String,
   reviews: [reviewSchema],
   evaluacion: String,
-  img: { data: Buffer, contentType: String }
+  img: { data: Buffer, contentType: String },
+  espacio: String
 });
 
 module.exports = mongoose.model('Room', roomSchema);
