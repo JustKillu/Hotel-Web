@@ -12,7 +12,7 @@ const Section = ({ id, color, title, text, sections, selectedSection, setSelecte
           {Object.keys(sections).map((key) => (
             <button 
               key={key} 
-              className={`m-1 p-2 rounded transition duration-300 ease-in-out transform ${selectedSection === key ? 'text-white border-b-2 border-yellow-300 bg-yellow-900 ' :  ' text-gray-400 hover:bg-yellow-900'}`} 
+              className={`m-1 p-2 rounded transition duration-300 ease-in-out transform ${selectedSection === key ? 'text-light-text dark:text-dark-text border-b-2 border-yellow-300 bg-yellow-900 ' :  ' text-gray-400 hover:bg-yellow-900'}`} 
               onClick={() => setSelectedSection(key)}
             >
               {key}

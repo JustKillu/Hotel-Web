@@ -22,7 +22,7 @@ const Weather = () => {
     return (
         <div>
             {weatherData ? (
-                <div>
+                <div className='text-light-text dark:text-dark-text'>
                     <h2>El clima actual en Valera, Trujillo, Venezuela es:</h2>
                     <h3>{weatherData.weather[0].description}</h3>
                     <h4>Temperatura: {weatherData.main.temp}°C</h4>

@@ -3,7 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 
 const RoomSection = ({ id, color, title, images }) => {
-    const bgColor = id === 'reserva' ? ' bg-brown text-white' : (id === 'banquetes' ? 'bg-orange-200 text-black' : 'bg-white text-black');
+    const bgColor = id === 'reserva' ? ' bg-brown text-light-text dark:text-dark-text' : (id === 'banquetes' ? 'bg-orange-200 text-black' : 'bg-white text-black');
 
     return (
         <div className={bgColor}>
