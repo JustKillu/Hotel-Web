@@ -85,7 +85,7 @@ export default function Form() {
         <input type="text" placeholder="Pais" value={country} onChange={(e) => setCountry(e.target.value)} required className="w-full p-2 mb-3 border rounded" />
         <label className="block mb-2 text-black">Correo electrónico</label>
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full p-2 mb-3 border rounded" />
-        <button type="submit" className="w-full p-2 text-white bg-orange-500 rounded hover:bg-orange-800">Register</button>
+        <button type="submit" className="w-full p-2 text-light-text dark:text-dark-text  bg-orange-500 rounded hover:bg-orange-800">Register</button>
       {alert && <div className="bottom-0 mt-4 p-2 text-center text-black bg-red-200 rounded shadow-lg">{alert}</div>}
       {success && <div className="bottom-0   mt-4 p-2 text-center text-black bg-green-200 rounded shadow-lg">{success}</div>}
       

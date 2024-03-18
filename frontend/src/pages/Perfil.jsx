@@ -42,10 +42,10 @@ const UserReservations = () => {
     <div className='flex justify-center mt-16'>
       <NavBarMain /> 
       <div className="p-4 text-black">
-        <h1 className="text-2xl font-bold mb-4 text-white">Reservaciones del usuario</h1>
+        <h1 className="text-2xl font-bold mb-4 text-light-text dark:text-dark-text ">Reservaciones del usuario</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
           {reservations.map(reservation => (
-            <div key={reservation._id} className="border p-4 mb-4 rounded shadow bg-white">
+            <div key={reservation._id} className="border p-4 mb-4 rounded shadow bg-white ">
               <h2 className="text-xl font-semibold">Factura de Reservación</h2>
               <p className="text-gray-700">ID de Reservación: {reservation._id}</p>
               {reservation.roomId.map((room, index) => (

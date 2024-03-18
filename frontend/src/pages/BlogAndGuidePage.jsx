@@ -17,7 +17,7 @@ const BlogAndGuidePage = ({ posts, activities }) => {
         <Blog posts={posts} />
       )}
 
-      <button onClick={() => setShowGuide(!showGuide)} className="p-2 w-32 ml-4  bg-blue-500 text-white rounded">
+      <button onClick={() => setShowGuide(!showGuide)} className="p-2 w-32 ml-4  bg-blue-500 text-light-text dark:text-dark-text  rounded">
         {showGuide ? 'Mostrar Blog' : 'Mostrar Guía Turística'}
       </button>
     </div>
