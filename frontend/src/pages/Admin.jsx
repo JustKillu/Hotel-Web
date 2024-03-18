@@ -127,12 +127,12 @@ const Admin = () => {
         <PromotionComp/>
         <CreateRoom/>
         {alert.show && (
-          <div className={`absolute top-0 right-0 m-4 p-2 rounded-md ${alert.type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+          <div className={`absolute top-0 right-0 m-4 p-2 rounded-md ${alert.type === 'success' ? 'bg-green-500 text-light-text dark:text-dark-text ' : 'bg-red-500 text-light-text dark:text-dark-text '}`}>
             {alert.message}
           </div>
         )}
         {confirmDelete.show && (
-          <div className="absolute top-0 right-0 m-8 p-2 rounded-md bg-red-500 text-white">
+          <div className="absolute top-0 right-0 m-8 p-2 rounded-md bg-red-500 text-light-text dark:text-dark-text ">
             ¿Estás seguro de que quieres borrar este usuario?
             <button onClick={handleConfirmDelete} className="bg-white text-red-500 font-bold py-1 px-2 rounded ml-4">
               Sí
@@ -142,15 +142,15 @@ const Admin = () => {
             </button>
           </div>
         )}
-        <h1 className="mt-4 text-2xl font-bold mb-4 ml-4 items-center justify-center text-white">Lista de Usuarios</h1>
+        <h1 className="mt-4 text-2xl font-bold mb-4 ml-4 items-center justify-center text-light-text dark:text-dark-text ">Lista de Usuarios</h1>
         
         <div className=" flex-col items-center ml-4 mr-4 justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       
           {Array.isArray(users) && users.map((user, index) => (
             <div key={index} className="bg-white p-4 rounded-md mb-4 w-full max-w-md shadow-lg">
             <h2 className="text-xl font-bold text-black pr-8">Usuario: {user.username}
-              <CopyToClipboard text={user._id}  onCopy={() => setCopied(true)} className='ml-4 text-lg bg-blue-500 rounded-xl text-white p-2'>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <CopyToClipboard text={user._id}  onCopy={() => setCopied(true)} className='ml-4 text-lg bg-blue-500 rounded-xl text-light-text dark:text-dark-text  p-2'>
+                <button className="bg-blue-500 hover:bg-blue-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded">
                   Copiar ID
                 </button>
               </CopyToClipboard>
@@ -164,10 +164,10 @@ const Admin = () => {
             <p className="text-black">Pais: {user.country}</p>
             <p className="text-black">Email: {user.email}</p>
             <p className="text-black">Rol: {user.rol}</p>
-            <button onClick={() => setEditingUser(user)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            <button onClick={() => setEditingUser(user)} className="bg-blue-500 hover:bg-blue-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded mt-4">
               Editar
             </button>
-            <button onClick={() => { handleDelete(user._id) }} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4">
+            <button onClick={() => { handleDelete(user._id) }} className="bg-red-500 hover:bg-red-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded mt-4 ml-4">
               Borrar
             </button>
           </div>
@@ -193,10 +193,10 @@ const Admin = () => {
                 <input type="text" value={editingUser.email} onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
                 <label className="block text-black">Rol</label>
                 <input type="text" value={editingUser.rol} onChange={(e) => setEditingUser({ ...editingUser, rol: e.target.value })} className="border-2 border-gray-200 p-2 rounded-md mb-4 w-full" />
-                <button onClick={() => handleUpdate(editingUser._id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                <button onClick={() => handleUpdate(editingUser._id)} className="bg-blue-500 hover:bg-blue-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded mt-4">
                   Guardar
                 </button>
-                <button onClick={() => setEditingUser(null)} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mt-4 ml-4">
+                <button onClick={() => setEditingUser(null)} className="bg-gray-500 hover:bg-gray-700 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded mt-4 ml-4">
                   Cancelar
                 </button>
               </div>
