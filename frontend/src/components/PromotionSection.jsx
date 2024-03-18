@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Buffer } from 'buffer';
 
 const PromotionComponent = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [promotions, setPromotions] = useState([]);
-  const [showForm, setShowForm] = useState(false); 
+  const [showForm, setShowForm] = useState(false);
   const [editId, setEditId] = useState(null);
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const PromotionComponent = () => {
     const rol = localStorage.getItem('rol');
     if (rol === 'adm') {
       setIsAdmin(true);
-    }else{
+    } else {
       setIsUser(true)
     }
 
@@ -62,7 +63,7 @@ const PromotionComponent = () => {
   };
 
   const handleAddClick = () => {
-    setShowForm(true); 
+    setShowForm(true);
     setEditId(null);
     setFormData({});
   };
@@ -82,64 +83,81 @@ const PromotionComponent = () => {
     setFormData({});
   };
 
+  const handleFileChange = (event) => {
+    setFormData({
+      ...formData,
+      img: event.target.files[0]
+    });
+  };
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const promotion = {
       name: event.target.name.value,
       description: event.target.description.value,
-      price: Number(event.target.price.value),
-      quantity: Number(event.target.quantity.value),
-      image: event.target.image.value,
-      time: event.target.time.value
+      comodidaes: event.target.amenities.value,
+      tarifas: Number(event.target.rates.value),
+      evaluacion: Number(event.target.evaluation.value),
+      img: formData.img
     };
+    const formData2 = new FormData();
+    Object.keys(promotion).forEach(key => formData2.append(key, promotion[key]));
+  
     if (editId) {
-      editPromotion(editId, promotion);
+      editPromotion(editId, formData2);
     } else {
-      addPromotion(promotion);
+      addPromotion(formData2);
     }
     setShowForm(false);
   };
+  
   return (
     <div className="p-4 items-center font-sans bg-yellow-50 text-black-900">
-     <h1 className="text-4xl font-bold text-gray-800 text-center py-4">Promociones Activas!</h1>
+      <h1 className="text-4xl font-bold text-gray-800 text-center py-4">Promociones Activas!</h1>
 
       {showForm && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-10">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-lg" onSubmit={handleSubmit}>
-            <input className=" border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="name" placeholder="Nombre de la promoción" required defaultValue={formData.name} />
-            <input className=" border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="description" placeholder="Descripción de la promoción" required defaultValue={formData.description} />
-            <input className=" border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="number" name="price" placeholder="Precio de la promoción" required defaultValue={formData.price} />
-            <input className="border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline mb-4" type="number" name="quantity" placeholder="Cantidad de la promoción" required defaultValue={formData.quantity} />
-            <input className=" border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="image" placeholder="Imagen de la promoción" required defaultValue={formData.image} />
-            <input className="border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="time" placeholder="Tiempo de la promoción" required defaultValue={formData.time} />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Enviar</button>
-            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mb-4 float-right" onClick={handleCloseClick}>Cerrar</button>
-          </form>
-        </div>
-      )}
+            <input className="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="name" placeholder="Nombre" required defaultValue={formData.name} />
+            <input className="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="description" placeholder="Descripción" required defaultValue={formData.description} />
+            <input className="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="text" name="amenities" placeholder="Comodidades" required defaultValue={formData.amenities} />
+            <input className="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="number" name="rates" placeholder="Tarifas" required defaultValue={formData.rates} />
+            <input className="border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline mb-4" type="number" name="evaluation" placeholder="Evaluación" required defaultValue={formData.evaluation} />
+            <label className="block mt-4">
+          <span className="text-gray-700">Imagen:</span>
+          <input type="file" name="img" onChange={handleFileChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" />
+        </label>
+        <button className="bg-blue-500 hover:bg-blue-700 text-light-text dark:text-dark-text font-bold py-2 px-4 rounded" type="submit">Enviar</button>
+        <button className="bg-red-500 hover:bg-red-600 text-light-text dark:text-dark-text font-bold py-2 px-4 rounded mb-4 float-right" onClick={handleCloseClick}>Cerrar</button>
+      </form>
+    </div>
+  )}
       <div className="flex overflow-x-auto pb-10 scrollbar-hide">
         <div className="flex flex-nowrap -mx-3">
-          {promotions.map(promotion => (
-            <div key={promotion._id} className="px-3">
-              <div className="h-80 flex-shrink-0 w-96 md:w-96 relative overflow-hidden bg-purple-500 rounded-lg shadow-lg">
-                <img className="absolute w-full h-full " src={promotion.image} alt={promotion.name} />
-                <div className="relative pl-4 mt-6">
-                  <h2 className="text-3xl leading-7 font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] text-white">{promotion.name}</h2>
-                  <div className="mt-1">
-                    <span className="font-semibold text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">{promotion.price}</span>
-                    <span className="ml-1 text-sm text-purple-300  drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.2)]">USD</span>
-                  </div>
-                  <div className="mt-6 pt-3">
-                    <h4 className="text-xl text-white leading-7 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">{promotion.description}</h4>
-                  </div>
-                  {isUser && (
-        <button className="bg-yellow-500 hover:bg-yellow-600 bottom-0  text-white font-bold py-2 px-4 rounded mb-4" onClick={moverPag}>Hacer Reservacion</button>
-      )}
+        {promotions.map(promotion => (
+  <div key={promotion._id} className="px-3">
+    <div className="h-80 flex-shrink-0 w-96 md:w-96 relative overflow-hidden bg-purple-500 rounded-lg shadow-lg">
+      
+      <img src={`data:${promotion.img.contentType};base64,${Buffer.from(promotion.img.data).toString('base64')}`} alt={promotion.name} className="w-full h-full object-cover" />
+
+<div className="absolute top-0 left-0 p-4">
+        <h2 className="text-3xl leading-26  font-bold text-white">{promotion.name}</h2>
+<div className="mt-6 pt-3">
+          <p className="text-xl text-white leading-7">{promotion.description}</p>
+        </div>
+        <div className="mt-1">
+          <span className="font-semibold text-white">{promotion.tarifa}</span>
+        </div>
+
+        {isUser && (
+          <button className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded mb-4" onClick={moverPag}>Hacer Reservacion</button>
+        )}
+
                 </div>
                 {isAdmin && (
                   <div className="absolute bottom-0 right-0 p-4">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded" onClick={() => handleEditClick(promotion)}>Editar</button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded ml-2" onClick={() => deletePromotion(promotion._id)}>Eliminar</button>
+                    <button className="bg-blue-500 hover:bg-blue-600 text-light-text dark:text-dark-text  font-bold py-2 px-3 rounded" onClick={() => handleEditClick(promotion)}>Editar</button>
+                    <button className="bg-red-500 hover:bg-red-600 text-light-text dark:text-dark-text  font-bold py-2 px-3 rounded ml-2" onClick={() => deletePromotion(promotion._id)}>Eliminar</button>
                   </div>
                 )}
               </div>
@@ -148,9 +166,9 @@ const PromotionComponent = () => {
         </div>
       </div>
       {isAdmin && (
-        <button className="bg-yellow-500 hover:bg-yellow-600 mt-2 text-white font-bold py-2 px-4 rounded mb-4" onClick={handleAddClick}>Añadir promoción</button>
+        <button className="bg-yellow-500 hover:bg-yellow-600 mt-2 text-light-text dark:text-dark-text  font-bold py-2 px-4 rounded mb-4" onClick={handleAddClick}>Añadir promoción</button>
       )}
-   
+
     </div>
   );
 };
