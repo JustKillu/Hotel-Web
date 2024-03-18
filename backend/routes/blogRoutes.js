@@ -26,5 +26,14 @@ router.post('/blog', async (req, res) => {
     res.json({ message: err });
   }
 });
+router.delete('/blog/:postId', async (req, res) => {
+  try {
+    const removedPost = await Post.remove({ _id: req.params.postId });
+    res.json(removedPost);
+    console.log("eliminado")
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
 
 module.exports = router;
