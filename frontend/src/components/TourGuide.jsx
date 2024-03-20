@@ -1,8 +1,8 @@
 import React from 'react';
-//Nota esta parte en el video grabado no estaba completa disculpe profe estuve muy ocupo cuando estaba grando el video
+// en el video se me paso colocar el valor de text-light-text dark:text-dark-text para manejar darkmode
 const TourGuide = () => {
   return (
-    <div className="p-4 prose">
+    <div className="p-4 text-light-text dark:text-dark-text prose">
       <h1 className="text-2xl font-bold mb-4">Guía Turística del Hotel Valera</h1>
       <p>¡Bienvenido al Hotel Valera! Aquí te presentamos algunas de las actividades y servicios que puedes disfrutar durante tu estancia con nosotros.</p>
 

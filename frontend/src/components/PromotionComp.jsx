@@ -37,7 +37,7 @@ const PromotionComponent = () => {
   }, [showAlert]);
 
   return (
-    <div className="fixed bottom-0 right-0 p-4 mr-6 mb-4 rounded-xl">
+    <div className="fixed bottom-0 right-0 p-4 mr-6 mb-4 rounded-xl  bg-pastel">
       {showAlert && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
           <strong className="font-bold">¡Éxito!</strong>
@@ -48,8 +48,8 @@ const PromotionComponent = () => {
         Mandar Publicidad
       </button>
       {isOpen && (
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit} className='mb-16'>
+          <div className="mb-4 ">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="userId">
               ID de Usuario
             </label>

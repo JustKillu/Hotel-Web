@@ -79,8 +79,8 @@ const HotelRooms = () => {
             <NavBarMain/>
             <div className="container mx-auto px-4 ">
                 <input type="text" value={roomSpaceFilter} onChange={(e) => setRoomSpaceFilter(e.target.value)} placeholder="Filtrar por espacio" className="w-full p-2 border mt-12 rounded mb-2" />
-                <div className="grid grid-cols-3 gap-4">
-                {rooms.filter(room => room && room.espacio && room.espacio.includes(roomSpaceFilter)).map(room => {
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 object-fill">
+                    {rooms.filter(room => room && room.espacio && room.espacio.includes(roomSpaceFilter)).map(room => {
                         let imgSrc = '';
                         if (room.img && room.img.data && room.img.data.data) {
                             imgSrc = `data:${room.img.contentType};base64,${Buffer.from(room.img.data.data).toString('base64')}`;
@@ -93,17 +93,17 @@ const HotelRooms = () => {
                                 whileHover={{ scale: 1.05 }}
                             >
                                 <h2 className="text-2xl font-semibold mb-2">{room.name}</h2>
-                                <img src={imgSrc} alt="" className="w-64 h-64 object-cover mb-4" loading="lazy" />
+                                <img src={imgSrc} alt="" className="w-full h-64 object-cover mb-4" loading="lazy" />
                             </motion.div>
                         );
                     })}
                 </div>
             </div>
             {selectedRoom && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
-                    <div className="bg-white p-6 rounded flex">
-                        <img src={`data:${selectedRoom.img.contentType};base64,${Buffer.from(selectedRoom.img.data.data).toString('base64')}`} alt="" className="w-64 h-64 object-cover mb-4" loading="lazy" />
-                        <div className="ml-4">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-10 overflow-auto">
+                    <div className="bg-white p-6 rounded flex flex-col md:flex-row m-4 max-h-full overflow-auto">
+                        <img src={`data:${selectedRoom.img.contentType};base64,${Buffer.from(selectedRoom.img.data.data).toString('base64')}`} alt="" className="w-full md:w-64 h-64 object-cover mb-4" loading="lazy" />
+                        <div className="ml-0 md:ml-4">
                             <h2 className="text-2xl font-semibold mb-2">{selectedRoom.name}</h2>
                             <p className="mb-2"><strong>Descripción:</strong> {selectedRoom.description}</p>
                             <p className="mb-2"><strong>Comodidades:</strong> {selectedRoom.comodidades}</p>
@@ -129,9 +129,10 @@ const HotelRooms = () => {
                             </Pagination>
                             <textarea value={reviews[selectedRoom._id] || ''} onChange={(event) => handleReviewChange(selectedRoom._id, event)} className="w-full p-2 border rounded mb-2" placeholder="Deja una reseña" />
                             <button onClick={() => handleReviewSubmit(selectedRoom._id)} className="w-full py-2 bg-blue-500 text-light-text dark:text-dark-text  rounded">Enviar reseña</button>
-                            <button onClick={() => setSelectedRoom(null)} className="w-full py-2 mt-4 text-center text-light-text dark:text-dark-text  bg-red-500 rounded">Cerrar</button>
+                            <button onClick={() => setSelectedRoom(null)} className="w-full py-2 mt-4 text-center text-light-text dark:text-dark-text  bg-red-500 rounded md:block hidden">Cerrar</button>
                         </div>
                     </div>
+                    <button onClick={() => setSelectedRoom(null)} className="md:hidden absolute top-0 right-0 m-4 py-2 px-4 text-center text-light-text dark:text-dark-text  bg-red-500 rounded">X</button>
                 </div>
             )}
         </div>
